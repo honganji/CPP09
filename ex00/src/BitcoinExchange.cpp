@@ -50,7 +50,7 @@ void BitcoinExchange::storeData(void)
 	else
 	{
 		std::cerr << "\033[31mUnable to open file!\033[0m";
-		exit(0);
+		std::exit(0);
 	}
 }
 
@@ -173,6 +173,6 @@ void BitcoinExchange::readInput(std::string path)
 	else
 	{
 		std::cerr << "\033[31mthe path doesn't exist...\033[0m" << std::endl;
-		exit(0);
+		std::exit(0);
 	}
 }
