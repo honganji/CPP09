@@ -1,12 +1,12 @@
-NAME := easyfind
+NAME := btc
 
 INCLUDE_DIR := include
 SRC_DIR := src
 OBJ_DIR := objs
 
-SOURCE := main.cpp
+SOURCE := main.cpp $(addprefix $(SRC_DIR)/, BitcoinExchange.cpp)
 
-HEADER := $(addprefix $(INCLUDE_DIR)/, easyfind.hpp)
+HEADER := $(addprefix $(INCLUDE_DIR)/, BitcoinExchange.hpp)
 
 
 OBJS := $(SOURCE:%.cpp=$(OBJ_DIR)/%.o)
@@ -36,6 +36,6 @@ re: fclean all
 
 debug_val: CC_FLAG += -g
 debug_val: re
-	./$(NAME)
+	./$(NAME) data/input.csv
 
 .PHONY: all clean fclean re debug

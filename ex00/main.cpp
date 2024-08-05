@@ -1,26 +1,18 @@
-#include "include/easyfind.hpp"
-#include <random>
+#include "include/BitcoinExchange.hpp"
 
-int main( void )
+int main(int argc, char *argv[])
 {
-	std::vector<int> vec;
-	std::random_device rd;
-	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> distrib(1, 100);
-	for (size_t i = 0; i < 100; i++)
+	if (argc == 2)
 	{
-		vec.push_back(distrib(gen));
-		if (vec.at(i) == 10)
-			std::cout << "There is 10!" << std::endl;
+		// (void)argv;
+		BitcoinExchange bc;
+		bc.storeData();
+		bc.readInput(argv[1]);
 	}
-	try
+	else
 	{
-		std::cout << *(easyfind(vec, 10)) << std::endl;
+		std::cerr << "The input should be one" << std::endl;
+		return (1);
 	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-	
 	return (0);
 }
