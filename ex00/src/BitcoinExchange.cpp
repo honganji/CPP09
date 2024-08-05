@@ -3,7 +3,7 @@
 BitcoinExchange::BitcoinExchange(void)
 {
 	_dataMap = new std::map<std::string, float>;
-	std::cout << "BitcoinExchange class is created!" << std::endl;
+	std::cout << "\033[34mBitcoinExchange class is created!\033[0m" << std::endl;
 }
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &ref)
@@ -28,7 +28,7 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &ref)
 BitcoinExchange::~BitcoinExchange (void)
 {
 	delete _dataMap;
-	std::cout << "BitcoinExchange class is destroyed!" << std::endl;
+	std::cout << "\033[34mBitcoinExchange class is destroyed!\033[0m" << std::endl;
 }
 
 void BitcoinExchange::storeData(void)
@@ -36,6 +36,7 @@ void BitcoinExchange::storeData(void)
 	std::ifstream file(DATA_PATH);
 	std::string line;
 
+	getline(file, line);
 	if (file.is_open())
 	{
 		while (getline(file, line))
@@ -48,16 +49,9 @@ void BitcoinExchange::storeData(void)
 	}
 	else
 	{
-		std::cerr << "Unable to open file!";
+		std::cerr << "\033[31mUnable to open file!\033[0m";
 		exit(0);
 	}
-}
-
-float BitcoinExchange::_getEle(std::string date)
-{
-	if (_dataMap->find(date) != _dataMap->end())
-		return ((*_dataMap)[date]);
-	return (-1);
 }
 
 bool BitcoinExchange::_checkDateFormat(const std::string &str) const
@@ -68,7 +62,7 @@ bool BitcoinExchange::_checkDateFormat(const std::string &str) const
 	ss >> std::get_time(&tm, "%Y-%m-%d");
 	if (ss.fail() || !ss.eof())
 	{
-		std::cerr << "Date format is not correct..." << std::endl;
+		std::cerr << "\033[31mDate format is not correct...\033[0m" << std::endl;
 		return (false);
 	}
 	return (true);
@@ -124,22 +118,22 @@ bool BitcoinExchange::_getValue(float &value, const std::string &line) const
 	}
 	catch (const std::invalid_argument &e)
 	{
-		std::cerr << e.what() << std::endl;
+		std::cerr << "\033[31m" << e.what() << "\033[0m" << std::endl;
 		return (false);
 	}
 	catch(const std::out_of_range &d)
 	{
-		std::cerr << d.what() << std::endl;
+		std::cerr << "\033[31m" << d.what() << "\033[0m" << std::endl;
 		return (false);
 	}
 	if (value > 1000)
 	{
-		std::cerr << "the value is too big" << std::endl;
+		std::cerr << "\033[31mthe value is too big\033[0m" << std::endl;
 		return (false);
 	}
 	else if (value < 0)
 	{
-		std::cerr << "the value should be positive" << std::endl;
+		std::cerr << "\033[31mthe value should be positive\033[0m" << std::endl;
 		return (false);
 	}
 	return (true);
@@ -162,7 +156,7 @@ void BitcoinExchange::_displayConversion(std::string line)
 		std::cout << value * price << " BTC" << std::endl;
 	}
 	else
-		std::cerr << "The format is not correct..." << std::endl;
+		std::cerr << "\033[31mThe format is not correct...\033[0m" << std::endl;
 }
 
 void BitcoinExchange::readInput(std::string path)
@@ -178,7 +172,7 @@ void BitcoinExchange::readInput(std::string path)
 	}
 	else
 	{
-		std::cerr << "the path doesn't exist..." << std::endl;
+		std::cerr << "\033[31mthe path doesn't exist...\033[0m" << std::endl;
 		exit(0);
 	}
 }

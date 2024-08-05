@@ -1,6 +1,6 @@
 #ifndef BITCOIN_EXCHANGE_HPP
 # define BITCOIN_EXCHANGE_HPP
-# define DATA_PATH "data/fake.csv"
+# define DATA_PATH "data/data.csv"
 
 #include <iostream>
 #include <map>
@@ -15,8 +15,6 @@ class BitcoinExchange
 		std::map<std::string, float> *_dataMap;
 		bool _getValue(float &value, const std::string &line) const;
 		float _getPrice(const std::string &str) const;
-		// TODO check if this function is necessary
-		float _getEle(std::string date);
 		void _displayConversion(std::string line);
 		bool _checkDateFormat(const std::string &str) const;
 		std::tm _strToTm(const std::string &dateStr) const;
