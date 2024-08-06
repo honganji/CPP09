@@ -48,22 +48,14 @@ void PmergeMe::_pmergeSortVec(std::vector<int> &vec, int start, int end)
 {
 	std::vector<int> indexVec;
 
-	if (start >= end)
-		return;
-	if (end - start == 1)
+	if (end - start <= 1)
 	{
-		if (vec[start] > vec[end])
+		if (end - start == 1 && vec[start] > vec[end])
 			std::swap(vec[start], vec[end]);
 		return;
 	}
-	// if (end - start <= 1)
-	// {
-	// 	if (end - start == 1 && vec[start] > vec[end])
-	// 		std::swap(vec[start], vec[end]);
-	// 	return;
-	// }
 
-	for (int i = 0; i < end; i += 2)
+	for (int i = start; i < end; i += 2)
 	{
 		if (vec[i] > vec[i + 1])
 			std::swap(vec[i], vec[i + 1]);
@@ -86,7 +78,7 @@ void PmergeMe::_pmergeSortDeq(std::deque<int> &deq, int start, int end)
 		return;
 	}
 
-	for (int i = 0; i < end; i += 2)
+	for (int i = start; i < end; i += 2)
 	{
 		if (deq[i] > deq[i + 1])
 			std::swap(deq[i], deq[i + 1]);
@@ -111,18 +103,20 @@ bool PmergeMe::pmergeMeSort(std::vector<int> &vec, std::deque<int> &deq)
 			return (false);
 		}
 	}
-	// TODO merge-insert sort for vector
+	std::cout << "Before: ";
+	displayContainer(vec, deq);
+	// merge-insert sort for vector
 	std::clock_t start = std::clock();
 	_pmergeSortVec(vec, 0, vec.size() - 1);
 	std::clock_t end = std::clock();
 	double vecTime = static_cast<double>(end - start) / CLOCKS_PER_SEC;
-	
 
-	// TODO merge-insert sort for deque
+	// merge-insert sort for deque
 	start = std::clock();
 	_pmergeSortDeq(deq, 0, deq.size() - 1);
 	end = std::clock();
 	double deqTime = static_cast<double>(end - start) / CLOCKS_PER_SEC;
+	std::cout << "After: ";
 	displayContainer(vec, deq);
 	std::cout << "\033[34m" << "Time to process a range of " << vec.size();
 	std::cout << " elements with std::vector<int> : " << vecTime;
@@ -139,9 +133,6 @@ void PmergeMe::displayContainer(std::vector<int> &vec, std::deque<int> &deq)
 		std::cout << *it << " ";
 	std::cout << std::endl;
 	(void)deq;
-	// for (std::deque<int>::iterator it = deq.begin(); it != deq.end(); it++)
-	// 	std::cout << *it << " ";
-	// std::cout << std::endl;
 }
 
 bool PmergeMe::parsing(int argc, char *argv[], std::vector<int> &vec, std::deque<int> &deq)

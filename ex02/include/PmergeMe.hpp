@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <deque>
 #include <set>
 #include <ctime>
 #include <cstring>
